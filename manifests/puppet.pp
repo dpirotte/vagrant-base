@@ -14,6 +14,12 @@ class base {
     ensure => "stopped",
     enable => false,
   }
+
+  rbenv::install { "vagrant": }
+  rbenv::compile { "2.1.3":
+    user => "vagrant",
+    global => true,
+  }
 }
 
 class oracle_java {
