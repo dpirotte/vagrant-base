@@ -33,7 +33,34 @@ class oracle_java {
   package { "oracle-java8-installer": require => Exec["accept-oracle-java-license"] }
 }
 
+class leiningen {
+  $url = "https://raw.githubusercontent.com/technomancy/leiningen/stable/bin/lein"
+  $bindir = "/home/vagrant/bin"
+
+  file { $bindir:
+    ensure => directory,
+    owner => $user,
+    group => $user,
+    mode => 0755,
+  }
+
+  exec { "download-leiningen":
+    cwd => $bindir,
+    command => "wget ${url}",
+    creates => "${bindir}/lein",
+    path => "/usr/bin",
+    require => File[$bindir],
+  }
+
+  file { "${bindir}/lein":
+    ensure => file,
+    mode => 0755,
+    require => Exec["download-leiningen"]
+  }
+}
+
 node "vagrant" {
   include base
+  include leiningen
   include oracle_java
 }
