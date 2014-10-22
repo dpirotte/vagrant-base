@@ -1,4 +1,6 @@
 class base {
+  $user = "vagrant"
+
   $installed_packages = [
     "vim-nox",
     "zsh",
@@ -16,19 +18,19 @@ class base {
     enable => false,
   }
 
-  rbenv::install { "vagrant": }
+  rbenv::install { $user: }
   rbenv::compile { "2.1.3":
-    user => "vagrant",
+    user => $user,
     global => true,
   }
 
-  user { "vagrant":
+  user { $user:
     shell => "/usr/bin/zsh",
   }
 
   class { "ohmyzsh": require => Package["zsh"] }
-  ohmyzsh::install { "vagrant": }
-  ohmyzsh::plugins { "vagrant": plugins => "git lein rbenv" }
+  ohmyzsh::install { $user: }
+  ohmyzsh::plugins { $user: plugins => "git lein rbenv" }
 }
 
 class oracle_java {
