@@ -1,6 +1,7 @@
 class base {
   $installed_packages = [
     "vim-nox",
+    "zsh",
   ]
 
   $purged_packages = [
