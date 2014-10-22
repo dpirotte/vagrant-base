@@ -10,6 +10,10 @@ class base {
   package { $installed_packages: ensure => "installed" }
   package { $purged_packages: ensure => "purged" }
 
+  service { "puppet":
+    ensure => "stopped",
+    enable => false,
+  }
 }
 
 class oracle_java {
