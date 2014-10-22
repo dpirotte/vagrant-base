@@ -21,6 +21,14 @@ class base {
     user => "vagrant",
     global => true,
   }
+
+  user { "vagrant":
+    shell => "/usr/bin/zsh",
+  }
+
+  class { "ohmyzsh": require => Package["zsh"] }
+  ohmyzsh::install { "vagrant": }
+  ohmyzsh::plugins { "vagrant": plugins => "git lein rbenv" }
 }
 
 class oracle_java {

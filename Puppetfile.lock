@@ -1,12 +1,15 @@
 FORGE
   remote: https://forgeapi.puppetlabs.com
   specs:
+    acme-ohmyzsh (0.1.2)
+      puppetlabs-stdlib (>= 0)
     alup-rbenv (1.2.0)
     puppetlabs-apt (1.6.0)
       puppetlabs-stdlib (>= 2.2.1)
     puppetlabs-stdlib (4.3.2)
 
 DEPENDENCIES
+  acme-ohmyzsh (>= 0)
   alup-rbenv (>= 0)
   puppetlabs-apt (>= 0)
 
