@@ -24,13 +24,17 @@ class base {
     global => true,
   }
 
-  user { $user:
-    shell => "/usr/bin/zsh",
-  }
-
   class { "ohmyzsh": require => Package["zsh"] }
   ohmyzsh::install { $user: }
   ohmyzsh::plugins { $user: plugins => "git lein rbenv" }
+
+  user { $user:
+    shell => "/usr/bin/zsh",
+    require => [
+      Package["zsh"],
+      Class["ohmyzsh"],
+    ],
+  }
 }
 
 class oracle_java {
@@ -41,7 +45,12 @@ class oracle_java {
     path => ["/bin","/usr/bin"],
   }
   apt::ppa { "ppa:webupd8team/java": }
-  package { "oracle-java8-installer": require => Exec["accept-oracle-java-license"] }
+  package { "oracle-java8-installer":
+    require => [
+      Exec["accept-oracle-java-license"],
+      Apt::Ppa["ppa:webupd8team/java"],
+    ],
+  }
 }
 
 class leiningen {
