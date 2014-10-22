@@ -2,6 +2,7 @@ class base {
   $user = "vagrant"
 
   $installed_packages = [
+    "autojump",
     "vim-nox",
     "zsh",
   ]
@@ -26,7 +27,7 @@ class base {
 
   class { "ohmyzsh": require => Package["zsh"] }
   ohmyzsh::install { $user: }
-  ohmyzsh::plugins { $user: plugins => "git lein rbenv" }
+  ohmyzsh::plugins { $user: plugins => "autojump git lein rbenv" }
 
   user { $user:
     shell => "/usr/bin/zsh",
