@@ -70,8 +70,50 @@ class leiningen {
   }
 }
 
+class dotfiles {
+  $dotfiles_root = "/home/vagrant/dotfiles"
+
+  package { "ruby-dev": ensure => installed }
+
+  file { $dotfiles_root:
+    ensure => "directory",
+    owner => "vagrant",
+    group => "vagrant",
+    mode => "0755"
+  }
+
+  vcsrepo { "${dotfiles_root}/vim_dotfiles":
+    ensure => "present",
+    provider => "git",
+    owner => "vagrant",
+    group => "vagrant",
+    source => "https://github.com/braintreeps/vim_dotfiles.git",
+    require => File[$dotfiles_root],
+  }
+
+  exec { "link-vim-dotfiles":
+    cwd => "${dotfiles_root}/vim_dotfiles",
+    environment => "HOME=/home/vagrant",
+    command => "/usr/bin/rake1.9.1 activate",
+    creates => "/home/vagrant/.vimrc",
+    require => Vcsrepo["${dotfiles_root}/vim_dotfiles"],
+  }
+  
+  exec { "build-command-t":
+    cwd => "${dotfiles_root}/vim_dotfiles/vim/bundle/command-t",
+    environment => "HOME=/home/vagrant",
+    command => "/usr/bin/rake1.9.1 make",
+    creates => "${dotfiles_root}/vim_dotfiles/vim/bundle/command-t/ruby/command-t/ext.so",
+    require => [
+      Package["ruby-dev"],
+      Vcsrepo["${dotfiles_root}/vim_dotfiles"],
+    ],
+  }
+}
+
 node "vagrant" {
   include base
+  include dotfiles
   include leiningen
   include oracle_java
 }

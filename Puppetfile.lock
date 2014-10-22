@@ -7,9 +7,11 @@ FORGE
     puppetlabs-apt (1.6.0)
       puppetlabs-stdlib (>= 2.2.1)
     puppetlabs-stdlib (4.3.2)
+    puppetlabs-vcsrepo (1.1.0)
 
 DEPENDENCIES
   acme-ohmyzsh (>= 0)
   alup-rbenv (>= 0)
   puppetlabs-apt (>= 0)
+  puppetlabs-vcsrepo (>= 0)
 
