@@ -3,6 +3,7 @@ class base {
 
   $installed_packages = [
     "autojump",
+    "ntp",
     "vim-nox",
     "zsh",
   ]
